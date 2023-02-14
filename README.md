@@ -1,1 +1,1 @@
-# grpc-load-balancing-long-lived-streaming-rpcs
+# Improving Load Balancing of Long-lived Streaming RPCs for gRPC-enabled Inter-service Communication

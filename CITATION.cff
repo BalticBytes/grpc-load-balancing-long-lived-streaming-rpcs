@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Improving Load Balancing of Long-lived Streaming RPCs for gRPC-enabled Inter-service Communication"
+abstract: "Many companies have adopted gRPC since 2015 for their microservices architecture due to its efficient communication method, particularly regarding streaming data. However, streaming requires long-lived connections that load-balancing solutions fail to address. These problems include unexpectedly overloading services, which may result in a chain of server failures. This paper describes the load-balancing problems with long-lived streaming RPCs and proposes a flow control-inspired approach that shifts the control of incoming requests from the load balancers to the application servers. Results of our experiments show that utilizing this method leads to more server resiliency in the case of long-lived streaming RPCs."
+authors:
+  - family-names: Starck
+    given-names: Christopher
+    orcid: https://orcid.org/0000-0001-7298-2080
+  - family-names: Ghofrani
+    given-names: Javad
+    orcid: https://orcid.org/0000-0002-9249-7434
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2023-02-17
+license: MIT
+repository-code: "https://github.com/BalticBytes/grpc-load-balancing-long-lived-streaming-rpcs"

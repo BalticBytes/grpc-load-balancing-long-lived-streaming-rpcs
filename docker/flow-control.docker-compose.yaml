@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  server:
+    image: java-server:progress
+    build:
+      context: ..
+      dockerfile: docker/java-server-progress.Dockerfile
+    networks:
+      example-network:
+        aliases:
+          - server
+    ports:
+      - "50051"
+    # https://docs.docker.com/compose/compose-file/deploy/
+    deploy:
+      mode: replicated
+      replicas: ${override_server_replicas}
+      endpoint_mode: dnsrr
+    env_file:
+    - thresholds.env
+    environment:
+      # - loadgrpc_debug=1
+      - loadgrpc_server_release_interval_ms=${override_server_release_interval_ms}
+      - loadgrpc_server_sensing_interval_ms=${override_server_sensing_interval_ms}
+      - loadgrpc_client_request_time_s=${override_client_request_time_s}
+      - loadgrpc_server_max_idle_time_ms=${override_server_max_idle_time_ms}
+  client:
+    image: java-client:progress
+    build:
+      context: ..
+      dockerfile: docker/java-client-progress.Dockerfile
+    volumes:
+      - ../wait-for-it.sh:/workspaces/wait-for-it.sh
+    networks:
+      example-network:
+        aliases:
+          - client
+    # restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: ${override_client_replicas}
+      endpoint_mode: vip
+    environment:
+      - loadgrpc_server_hostname=server:50051
+      - loadgrpc_client_lb_policy=${override_client_lb_policy} # round_robin, pick_first
+      - loadgrpc_client_request_time_s=${override_client_request_time_s}
+      - loadgrpc_client_num_requests=${override_client_num_requests}
+      - loadgrpc_client_num_messages=${override_client_num_messages}
+      - loadgrpc_client_initial_delay_s=${override_client_initial_delay_s}
+      - loadgrpc_client_variance_request=${override_client_variance_request}
+      - loadgrpc_client_variance_message=${override_client_variance_message}
+
+networks:
+  example-network: {}

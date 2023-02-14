@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package loadgrpc;
+option java_package = "loadgrpc.example";
+option java_multiple_files = true;
+
+message ExampleMessage {
+  string payload = 10;
+}
+message ExampleResponse {
+  string payload = 10;
+}
+
+service ExampleService {
+  rpc Unary(ExampleMessage) returns (ExampleResponse) {};
+  rpc ClientStreaming(stream ExampleMessage) returns (ExampleResponse) {};
+  rpc ServerStreaming(ExampleMessage) returns (stream ExampleResponse) {};
+  rpc BidirectionalStreaming(stream ExampleMessage) returns (stream ExampleResponse) {};
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package loadgrpc;
+option java_package = "loadgrpc.flowcontrol";
+option java_multiple_files = true;
+
+message FlowControlledMsg {
+  string senderHostname = 10;
+  string requestId = 20;
+}
+
+message FlowControlResponse {
+  uint32 request = 10;
+}
+
+service FlowControlService {
+  rpc ControlledStreaming(stream FlowControlledMsg) returns (stream FlowControlResponse) {};
+}

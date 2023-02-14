@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+// import "google/protobuf/timestamp.proto";
+
+package loadgrpc;
+option java_package = "loadgrpc.experiment";
+option java_multiple_files = true;
+
+message EmptyMsg {}
+
+message BaselineMsg {
+  string senderHostname = 10;
+  string requestId = 20;
+}
+
+service ExperimentService {
+  rpc ClientStreaming(stream BaselineMsg) returns (EmptyMsg) {};
+}
